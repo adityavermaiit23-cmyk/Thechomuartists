@@ -1,0 +1,313 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the chomu artists | Digital Creative Agency</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#0f0b1e',
+                            surface: '#1a1438',
+                            accent: '#22d3ee', // Cyan 400
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f0b1e;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor to use custom one */
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            border: 2px solid #22d3ee;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 99999;
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s, border-color 0.3s;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        #custom-cursor.cursor-hover {
+            width: 50px; height: 50px;
+            background-color: rgba(34, 211, 238, 0.1);
+            border-color: #22d3ee;
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+        }
+        /* Disable custom cursor on mobile/touch devices */
+        @media (hover: none) and (pointer: coarse), (max-width: 768px) {
+            body { cursor: auto; }
+            #custom-cursor { display: none !important; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f0b1e; }
+        ::-webkit-scrollbar-thumb { background: #3b2c6b; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22d3ee; }
+
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+        .accordion-content.active {
+            max-height: 800px;
+            opacity: 1;
+        }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-icon.active { transform: rotate(180deg); }
+
+        /* Animated Gradient Text */
+        .animate-gradient-text {
+            background: linear-gradient(to right, #a855f7, #ec4899, #22d3ee, #ec4899, #a855f7);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient-text 5s linear infinite;
+        }
+
+        @keyframes gradient-text {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Cinematic Glow */
+        .title-glow {
+            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4)) drop-shadow(0 0 50px rgba(34, 211, 238, 0.2));
+        }
+        
+        .glow-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .glow-cyan { background: radial-gradient(circle, rgba(34,211,238,0.1) 0%, rgba(0,0,0,0) 70%); }
+
+        /* Ensure interactive elements don't show default cursor */
+        a, button, input, textarea, select { cursor: none; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative font-sans" id="home">
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- Ambient Glow Backgrounds -->
+    <div class="glow-circle glow-cyan w-[600px] h-[600px] top-[40%] left-[-200px]"></div>
+    <div class="glow-circle w-[700px] h-[700px] bottom-[10%] right-[-200px]"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 bg-[#0f0b1e]/90 backdrop-blur-md border-b border-purple-500/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo linking back to top -->
+            <a href="#home" class="text-2xl font-bold font-display text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 tracking-wider hover:scale-105 transition-transform cursor-pointer">
+                tca.
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">About</a>
+                <a href="#team" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Team</a>
+                <a href="#services" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Services</a>
+                <a href="#portfolio" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Portfolio</a>
+                <a href="#pricing" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Pricing</a>
+                <a href="#testimonials" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Reviews</a>
+                <a href="#faq" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">FAQ</a>
+                <a href="#contact" class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 hover:bg-cyan-400 hover:text-[#0f0b1e] px-5 py-2 rounded-full transition-all duration-300 text-sm uppercase tracking-widest font-bold shadow-[0_0_15px_rgba(34,211,238,0.1)]">Contact Us</a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-cyan-400 text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-[#1a1438] border-b border-purple-500/20 shadow-2xl">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#about" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">About</a>
+                <a href="#team" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Team</a>
+                <a href="#services" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Services</a>
+                <a href="#portfolio" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Portfolio</a>
+                <a href="#pricing" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Pricing</a>
+                <a href="#testimonials" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">Reviews</a>
+                <a href="#faq" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors text-sm uppercase tracking-widest font-semibold">FAQ</a>
+                <a href="#contact" class="mobile-link text-cyan-400 font-bold text-sm uppercase tracking-widest border-t border-purple-500/20 pt-4 mt-2">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <header class="relative pt-40 pb-20 px-6 flex flex-col items-center justify-center min-h-[100vh] text-center overflow-hidden">
+        <!-- Background Video -->
+        <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
+            <video autoplay loop muted playsinline class="object-cover w-full h-full opacity-30">
+                <!-- Abstract tech looping placeholder -->
+                <source src="https://cdn.pixabay.com/video/2020/05/25/40139-424754716_tiny.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#0f0b1e]/90 via-[#0f0b1e]/60 to-[#0f0b1e]"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 w-full" data-aos="zoom-in" data-aos-duration="1200">
+            <h1 class="text-5xl md:text-7xl lg:text-[8rem] font-display font-extrabold tracking-tighter mb-8 leading-none pb-4 max-w-7xl mx-auto title-glow animate-gradient-text">
+                the chomu artists
+            </h1>
+            
+            <div class="bg-white/5 backdrop-blur-xl border border-white/10 px-8 md:px-12 py-4 md:py-5 rounded-full inline-block mb-14 shadow-[0_0_40px_rgba(34,211,238,0.1)] relative overflow-hidden group hover:scale-[1.02] transition-transform">
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <p class="text-[10px] md:text-sm text-cyan-50 font-semibold uppercase tracking-[0.2em] md:tracking-[0.4em] leading-relaxed relative z-10">
+                    Always here to help you with your digital journey
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-5 justify-center">
+                <a href="#contact" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-[#0f0b1e] px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform duration-300 shadow-lg shadow-cyan-500/30">
+                    Start Your Journey
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. About Section -->
+    <section id="about" class="py-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+            <h2 class="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-4">About Us</h2>
+            <h3 class="text-3xl md:text-5xl font-display font-bold mb-8 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Blending technical precision with sheer artistic vision.</h3>
+            <div class="text-slate-300 font-light leading-relaxed space-y-6 text-lg">
+                <p>
+                    We are a dedicated group of creative individuals who have been working together in this industry for the last 3 years, pushing the boundaries of digital content and web architecture.
+                </p>
+                <p>
+                    What started as a shared passion for creation has evolved into a professional agency. We understand that your digital presence is your modern storefront, and we are committed to making sure it stands out with elegance, speed, and stunning visuals.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Team Section -->
+    <section id="team" class="py-24 px-6 bg-[#1a1438]/30 border-y border-purple-500/20 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-4">Our Core</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold text-white">Meet The Team</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Sahil -->
+                <div class="bg-[#1a1438] rounded-2xl p-8 text-center border border-purple-500/20 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 group shadow-lg" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold text-white mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/40 transition-all">SV</div>
+                    <h4 class="text-xl font-display font-bold text-white mb-1">Sahil Verma</h4>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">Web Developer & Designer</p>
+                    <p class="text-slate-400 text-xs italic border-t border-purple-500/20 pt-4 mt-4">Graduating from Shoolini University, Himachal Pradesh</p>
+                </div>
+
+                <!-- Sinku -->
+                <div class="bg-[#1a1438] rounded-2xl p-8 text-center border border-purple-500/20 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 group shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold text-white mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/40 transition-all">SV</div>
+                    <h4 class="text-xl font-display font-bold text-white mb-1">Sinku Verma</h4>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">Content Writer & Researcher</p>
+                    <p class="text-slate-400 text-xs italic border-t border-purple-500/20 pt-4 mt-4">Graduating from Azim Premji University, Bhopal</p>
+                </div>
+
+                <!-- Aditya -->
+                <div class="bg-[#1a1438] rounded-2xl p-8 text-center border border-purple-500/20 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 group shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold text-white mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/40 transition-all">AK</div>
+                    <h4 class="text-xl font-display font-bold text-white mb-1">Aditya Kumar</h4>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">Video Editor & Color Grading</p>
+                    <p class="text-slate-400 text-xs italic border-t border-purple-500/20 pt-4 mt-4">Graduating from Vinoba Bhave University, Hazaribagh</p>
+                </div>
+
+                <!-- Shailesh -->
+                <div class="bg-[#1a1438] rounded-2xl p-8 text-center border border-purple-500/20 hover:border-cyan-400 transition-all duration-300 hover:-translate-y-2 group shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl font-bold text-white mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-cyan-500/40 transition-all">SK</div>
+                    <h4 class="text-xl font-display font-bold text-white mb-1">Shailesh Kumar</h4>
+                    <p class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2">Marketing Head & Writer</p>
+                    <p class="text-slate-400 text-xs italic border-t border-purple-500/20 pt-4 mt-4">Graduating from St. Xavier's College, Hazaribagh</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services Section -->
+    <section id="services" class="py-24 px-6 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-4">Our Expertise</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">What We Do</h3>
+            </div>
+            
+            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Service 1 -->
+                <div class="bg-[#1a1438] border border-purple-500/20 rounded-2xl overflow-hidden hover:border-cyan-400 transition-colors group">
+                    <button class="w-full text-left px-8 py-6 flex justify-between items-center focus:outline-none" onclick="toggleAccordion('service-1', this)">
+                        <span class="text-xl font-display font-semibold flex items-center gap-4"><i class="fa-solid fa-video text-purple-400 group-hover:text-cyan-400 w-6"></i> Video Editing</span>
+                        <i class="accordion-icon fa-solid fa-chevron-down text-cyan-400"></i>
+                    </button>
+                    <div id="service-1" class="accordion-content">
+                        <div class="px-8 pb-8 text-slate-300 font-light border-t border-purple-500/10 mt-2 pt-4">
+                            <ul class="space-y-3">
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Advanced timeline layering</li>
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Cinematic color grading</li>
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Perfect text-to-audio synchronization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-[#1a1438] border border-purple-500/20 rounded-2xl overflow-hidden hover:border-cyan-400 transition-colors group">
+                    <button class="w-full text-left px-8 py-6 flex justify-between items-center focus:outline-none" onclick="toggleAccordion('service-2', this)">
+                        <span class="text-xl font-display font-semibold flex items-center gap-4"><i class="fa-solid fa-laptop-code text-pink-400 group-hover:text-cyan-400 w-6"></i> Web Development</span>
+                        <i class="accordion-icon fa-solid fa-chevron-down text-cyan-400"></i>
+                    </button>
+                    <div id="service-2" class="accordion-content">
+                        <div class="px-8 pb-8 text-slate-300 font-light border-t border-purple-500/10 mt-2 pt-4">
+                            <ul class="space-y-3">
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Fully responsive, lightning-fast modern websites</li>
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> Intuitive UI/UX design matching your brand identity</li>
+                                <li><i class="fa-solid fa-check text-cyan-400 mr-2"></i> End-to-end deployment and maintenance</li>
+                            </ul>
